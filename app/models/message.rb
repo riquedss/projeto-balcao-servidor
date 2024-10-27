@@ -1,4 +1,4 @@
 class Message < ApplicationRecord
-  belongs_to :user, presence: true
-  belongs_to :advertisement, presence: true
+  belongs_to :user
+  belongs_to :advertisement
 end
