@@ -42,25 +42,25 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_27_040730) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "negotiations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
+    t.uuid "advertisement_id", null: false
+    t.index ["advertisement_id"], name: "index_negotiations_on_advertisement_id"
+    t.index ["user_id"], name: "index_negotiations_on_user_id"
+  end
+
   create_table "reviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.float "rating"
     t.text "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id", null: false
-    t.uuid "transaction_id", null: false
-    t.index ["transaction_id"], name: "index_reviews_on_transaction_id"
+    t.uuid "negotiation_id", null: false
+    t.index ["negotiation_id"], name: "index_reviews_on_negotiation_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
-  end
-
-  create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "user_id", null: false
-    t.uuid "advertisement_id", null: false
-    t.index ["advertisement_id"], name: "index_transactions_on_advertisement_id"
-    t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -70,7 +70,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_27_040730) do
     t.string "email"
     t.string "password_digest"
     t.integer "role"
-    t.string "university"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -78,8 +77,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_27_040730) do
   add_foreign_key "advertisements", "users"
   add_foreign_key "messages", "advertisements"
   add_foreign_key "messages", "users"
-  add_foreign_key "reviews", "transactions"
+  add_foreign_key "negotiations", "advertisements"
+  add_foreign_key "negotiations", "users"
+  add_foreign_key "reviews", "negotiations"
   add_foreign_key "reviews", "users"
-  add_foreign_key "transactions", "advertisements"
-  add_foreign_key "transactions", "users"
 end
