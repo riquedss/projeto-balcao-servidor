@@ -5,7 +5,6 @@ RSpec.describe Advertisement, type: :model do
     let(:anunciador) { create(:user) }
     let(:interested) { create(:user) }
     let(:advertisement) { create(:advertisement, user: anunciador) }
-    # let(:negotiation) { create(:negotiation, user: anunciador, advertisement: advertisement) }
 
     context "When creating an advertisement in the database," do
       it "must be possible to associate the advertisement with 1 User." do
