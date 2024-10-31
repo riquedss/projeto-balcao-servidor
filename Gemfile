@@ -31,8 +31,9 @@ group :development, :test do
   gem "dotenv-rails"
   gem "rspec-rails"
   gem "factory_bot_rails"
-  gem "faker"
 end
+
+gem "faker"
 
 group :test do
   gem "database_cleaner"
