@@ -83,3 +83,4 @@ production:
   database: projeto_balcao_servidor_production
   username: projeto_balcao_servidor
   password: <%= ENV["PROJETO_BALCAO_SERVIDOR_DATABASE_PASSWORD"] %>
+  host: <%= ENV["PROJETO_BALCAO_SERVIDOR_DATABASE_HOST"] %>
