@@ -12,7 +12,8 @@ module Api
       end
 
       def create
-        @advertisement = Advertisement.new(params_advertisement)
+        @advertisement = Advertisement.new(params_advertisement.except(:images))
+        @advertisement.attach_images(params[:images]) if params[:images].present?
 
         if @advertisement.save
           render(json: @advertisement, status: :created)
