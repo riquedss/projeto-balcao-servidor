@@ -1,8 +1,6 @@
 module Api
   module V1
     class AdvertisementsController < ApplicationController
-      include Rails.application.routes.url_helpers
-
       before_action :set_advertisement, only: %i[show update destroy]
 
       def index
