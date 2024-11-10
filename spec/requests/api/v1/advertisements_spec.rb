@@ -25,10 +25,10 @@ RSpec.describe 'api/v1/advertisements', type: :request do
             price: { type: :number },
             phone_contact: { type: :string },
             email_contact: { type: :string },
-            user_id: { type: :integer },
+            user_id: { type: :string },
             images: { type: :array, items: { type: :string, format: :binary } }
           },
-          required: ['title', 'description', 'price', 'phone_contact', 'email_contact', 'user_id']
+          required: [ 'title', 'description', 'price', 'phone_contact', 'email_contact', 'user_id' ]
         }
         response(201, 'created') do
           let(:advertisement) do
@@ -38,7 +38,7 @@ RSpec.describe 'api/v1/advertisements', type: :request do
               price: 100.0,
               phone_contact: '123456789',
               email_contact: 'example@example.com',
-              user_id: 1,
+              user_id: '5b74ce72-e1cf-446a-8d50-b8bc3f779e88',
               images: []
             }
           end
@@ -92,7 +92,7 @@ RSpec.describe 'api/v1/advertisements', type: :request do
           price: { type: :number },
           phone_contact: { type: :string },
           email_contact: { type: :string },
-          user_id: { type: :integer },
+          user_id: { type: :string },
           images: { type: :array, items: { type: :string, format: :binary } }
         }
       }
@@ -127,7 +127,7 @@ RSpec.describe 'api/v1/advertisements', type: :request do
           price: { type: :number },
           phone_contact: { type: :string },
           email_contact: { type: :string },
-          user_id: { type: :integer },
+          user_id: { type: :string },
           images: { type: :array, items: { type: :string, format: :binary } }
         }
       }

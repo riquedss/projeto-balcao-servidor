@@ -29,7 +29,7 @@ paths:
             email_contact:
               type: string
             user_id:
-              type: integer
+              type: string
             images:
               type: array
               items:
@@ -80,7 +80,7 @@ paths:
             email_contact:
               type: string
             user_id:
-              type: integer
+              type: string
             images:
               type: array
               items:
@@ -110,7 +110,7 @@ paths:
             email_contact:
               type: string
             user_id:
-              type: integer
+              type: string
             images:
               type: array
               items:
