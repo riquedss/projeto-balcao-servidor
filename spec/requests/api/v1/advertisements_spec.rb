@@ -1,18 +1,7 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/advertisements', type: :request do
-  let!(:user) do
-    User.create!(
-      full_name: Faker::Name.name,
-      cpf: "772.859.910-07",
-      email: Faker::Internet.email(domain: "id.uff.br")
-    )
-  end
-
-  before do
-    allow_any_instance_of(Advertisement).to receive(:save).and_return(true)
-    allow_any_instance_of(Advertisement).to receive(:destroy).and_return(true)
-  end
+  let(:user) { create(:user) }
 
   path '/api/v1/advertisements' do
     get('list advertisements') do
@@ -33,22 +22,17 @@ RSpec.describe 'api/v1/advertisements', type: :request do
           user_id: { type: :string },
           images: { type: :array, items: { type: :string, format: :binary } }
         },
-        required: ['title', 'description', 'price', 'phone_contact', 'email_contact', 'user_id' ]
+        required: [ 'title', 'description', 'price', 'phone_contact', 'email_contact', 'user_id' ]
       }
 
       response(201, 'created') do
-        let(:advertisement) do
-          {
-            title: 'Sample Ad',
-            description: 'This is a sample advertisement.',
-            price: 100.0,
-            phone_contact: '123456789',
-            email_contact: 'example@example.com',
-            user_id: user.uuid,
-            images: []
-          }
-        end
+        let(:advertisement) { create(:advertisement, user: user) }
         xit
+      end
+
+      response(422, 'unprocessable entity') do
+        let(:advertisement) { { title: '' } }
+        run_test!
       end
     end
   end
@@ -56,10 +40,14 @@ RSpec.describe 'api/v1/advertisements', type: :request do
   path '/api/v1/advertisements/{id}' do
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
-    let(:id) { Advertisement.create!(title: 'Sample Ad', description: 'Sample description', price: 100).id }
-
+    let(:advertisement) { create(:advertisement, user: user) }
     get('show advertisement') do
       response(200, 'successful') do
+        xit
+      end
+
+      response(404, 'not found') do
+        let(:id) { 'nonexistent' }
         xit
       end
     end
@@ -79,13 +67,23 @@ RSpec.describe 'api/v1/advertisements', type: :request do
       }
 
       response(200, 'successful') do
-        let(:advertisement) { { title: 'Updated Title' } }
+        let(:advertisement) { create(:advertisement, user: user) }
+        xit
+      end
+
+      response(422, 'unprocessable entity') do
+        let(:advertisement) { create(:advertisement, user: user) }
         xit
       end
     end
 
     delete('delete advertisement') do
       response(204, 'no content') do
+        xit
+      end
+
+      response(404, 'not found') do
+        let(:advertisement) { create(:advertisement, user: user) }
         xit
       end
     end
