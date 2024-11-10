@@ -13,6 +13,7 @@ module Api
 
       def create
         @advertisement = Advertisement.new(params_advertisement)
+
         if @advertisement.save
           render(json: @advertisement, status: :created)
         else
@@ -56,7 +57,7 @@ module Api
       private
 
       def params_advertisement
-        params.permit(:title, :description, :price, :phone_contact, :email_contact, :user_id)
+        params.permit(:title, :description, :price, :phone_contact, :email_contact, :user_id, images: [])
       end
 
       def set_advertisement
