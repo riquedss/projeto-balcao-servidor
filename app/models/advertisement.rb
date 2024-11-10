@@ -1,7 +1,5 @@
 class Advertisement < ApplicationRecord
   include Rails.application.routes.url_helpers
-  
-  before_save :attach_images
 
   belongs_to :user
   has_many :negotiations, dependent: :restrict_with_exception
@@ -9,9 +7,9 @@ class Advertisement < ApplicationRecord
 
   has_many_attached :images
 
-  def attach_images
-    if images.present?
-      images.each do |image_base64|
+  def attach_images(images_base64)
+    if images_base64.present?
+      images_base64.each do |image_base64|
         image_data = Base64.decode64(image_base64)
         images.attach(
           io: StringIO.new(image_data),
@@ -28,7 +26,6 @@ class Advertisement < ApplicationRecord
 
   def as_json(options = {})
     super(options.merge({
-      include: { images: { only: [] } },
       methods: :images_urls
     }))
   end
