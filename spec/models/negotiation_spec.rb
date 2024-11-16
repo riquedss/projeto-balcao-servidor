@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Negotiation, type: :model do
   describe "Relationship Rules:" do
     let(:anunciador) { create(:user) }
-    let(:interested) { create(:user) }
+    let(:interested) { create(:user, :cpf_alternativo) }
     let(:advertisement) { create(:advertisement, user: anunciador) }
     let(:negotiation) { create(:negotiation, user: anunciador, advertisement: advertisement) }
 

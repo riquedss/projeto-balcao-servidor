@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Message, type: :model do
   describe "Relationship Rules:" do
     let(:anunciador) { create(:user) }
-    let(:interested) { create(:user) }
+    let(:interested) { create(:user, :cpf_alternativo) }
     let(:advertisement) { create(:advertisement, user: anunciador) }
 
     context "When creating an message in the database," do
