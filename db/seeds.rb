@@ -8,10 +8,14 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+password_faker = Faker::Internet.password(min_length: 8)
+
 user = User.create!(
   full_name: Faker::Name.name,
   cpf: "772.859.910-07",
-  email: Faker::Internet.email(domain: "id.uff.br")
+  email: Faker::Internet.email(domain: "id.uff.br"),
+  password: password_faker,
+  password_confirmation: password_faker
 )
 
 10.times do
