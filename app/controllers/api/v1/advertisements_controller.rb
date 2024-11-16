@@ -12,7 +12,9 @@ module Api
       end
 
       def create
-        @advertisement = Advertisement.new(params_advertisement)
+        @advertisement = Advertisement.new(params_advertisement.except(:images))
+        @advertisement.attach_images(params[:images]) if params[:images].present?
+
         if @advertisement.save
           render(json: @advertisement, status: :created)
         else
@@ -28,27 +30,6 @@ module Api
         end
       end
 
-      def mock
-        body = params.permit(:number_generate_advertisement)
-
-        unless body["number_generate_advertisement"].is_a? Integer
-          return render(json: { message: "'number_generate_advertisement' must exist and be a number" }, status: :bad_request)
-        end
-
-        body["number_generate_advertisement"].times do
-          Advertisement.create!(
-            title: Faker::Book.title,
-            description: Faker::Lorem.paragraph(sentence_count: 8),
-            price: Faker::Number.decimal(l_digits: 4),
-            phone_contact: Faker::PhoneNumber.cell_phone_in_e164,
-            email_contact: Faker::Internet.email,
-            user: set_user
-          )
-        end
-
-        head(:ok)
-      end
-
       def destroy
         @advertisement.destroy
       end
@@ -56,15 +37,11 @@ module Api
       private
 
       def params_advertisement
-        params.permit(:title, :description, :price, :phone_contact, :email_contact, :user_id)
+        params.permit(:title, :description, :price, :phone_contact, :email_contact, :user_id, images: [])
       end
 
       def set_advertisement
         @advertisement = Advertisement.find(params[:id])
-      end
-
-      def set_user
-        User.first || User.create!(full_name: Faker::Name.name, cpf: "772.859.910-07", email: Faker::Internet.email(domain: "id.uff.br"))
       end
     end
   end
