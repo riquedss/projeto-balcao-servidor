@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      post "/advertisements/mock", to: "advertisements#mock"
+      mount_devise_token_auth_for "User", at: "auth"
       resources :advertisements
     end
   end
