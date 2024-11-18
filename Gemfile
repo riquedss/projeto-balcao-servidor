@@ -29,6 +29,9 @@ gem "devise"
 gem "devise_token_auth"
 gem "omniauth", "~> 2.1"
 
+# Authorization
+gem 'cancancan'
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "byebug"
