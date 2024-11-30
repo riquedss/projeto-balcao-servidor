@@ -2,9 +2,11 @@ module Api
   module V1
     class AdvertisementsController < ApplicationController
       before_action :set_advertisement, only: %i[show update destroy]
+      before_action :initialize_advertisement, only: :create
+      authorize_resource except: %i[index show]
 
       def index
-        render(json: Advertisement.all)
+        render(json: PaginationService.process_query(Advertisement, request.query_parameters))
       end
 
       def show
@@ -12,13 +14,10 @@ module Api
       end
 
       def create
-        @advertisement = Advertisement.new(params_advertisement.except(:images))
-        @advertisement.attach_images(params[:images]) if params[:images].present?
-
         if @advertisement.save
           render(json: @advertisement, status: :created)
         else
-          render(json: @advertisement.errors, status: 422)
+          render(json: @advertisement.errors, status: :unprocessable_entity)
         end
       end
 
@@ -38,6 +37,11 @@ module Api
 
       def params_advertisement
         params.permit(:title, :description, :price, :phone_contact, :email_contact, :user_id, images: [])
+      end
+
+      def initialize_advertisement
+        @advertisement = Advertisement.new(params_advertisement.except(:images))
+        @advertisement.attach_images(params[:images]) if params[:images].present?
       end
 
       def set_advertisement

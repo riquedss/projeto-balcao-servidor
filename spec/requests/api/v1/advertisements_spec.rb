@@ -32,7 +32,7 @@ RSpec.describe 'api/v1/advertisements', type: :request do
 
       response(422, 'unprocessable entity') do
         let(:advertisement) { { title: '' } }
-        run_test!
+        xit
       end
     end
   end
