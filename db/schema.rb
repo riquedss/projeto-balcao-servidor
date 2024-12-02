@@ -46,8 +46,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_09_220037) do
   create_table "advertisements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.float "price"
-    t.integer "status"
+    t.decimal "price", precision: 7, scale: 2
+    t.integer "status", default: 0
+    t.integer "kind", default: 0
     t.integer "category"
     t.integer "campus"
     t.string "phone_contact"

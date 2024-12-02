@@ -13,7 +13,6 @@ class User < ApplicationRecord
          :validatable
   include DeviseTokenAuth::Concerns::User
 
-  REGEX_EMAIL = /\A[^@\s]+@id\.uff\.br\z/
   REGEX_CPF = /(^\d{3}\.\d{3}\.\d{3}-\d{2}$)/
 
   validates :full_name, presence: true
