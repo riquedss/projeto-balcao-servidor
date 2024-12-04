@@ -9,14 +9,12 @@
 #   end
 NUMERO_ADVERTISEMENT = 1000
 
-password_faker = Faker::Internet.password(min_length: 8)
-
 user = User.create!(
   full_name: Faker::Name.name,
   cpf: "772.859.910-71",
   email: Faker::Internet.email(domain: "id.uff.br"),
-  password: password_faker,
-  password_confirmation: password_faker
+  password: "password123",
+  password_confirmation: "password123"
 )
 
 NUMERO_ADVERTISEMENT.times do
