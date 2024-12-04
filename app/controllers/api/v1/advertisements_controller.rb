@@ -6,7 +6,7 @@ module Api
       authorize_resource except: %i[index show]
 
       def index
-        render(json: PaginationService.process_query(Advertisement, request.query_parameters))
+        render(json: PaginationAdvertisementService.process_query(Advertisement, request.query_parameters))
       end
 
       def show
@@ -36,7 +36,7 @@ module Api
       private
 
       def params_advertisement
-        params.permit(:title, :description, :price, :phone_contact, :email_contact, :user_id, images: [])
+        params.permit(:title, :description, :price, :campus, :category, :kind, :phone_contact, :email_contact, :user_id, images: [])
       end
 
       def initialize_advertisement
