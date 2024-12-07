@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       mount_devise_token_auth_for "User", at: "auth"
       resources :advertisements
+      get "/storage/blob/:id" => "storage_blob#download"
     end
   end
 end
