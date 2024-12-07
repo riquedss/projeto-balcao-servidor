@@ -10,12 +10,12 @@ module Api
       end
 
       def show
-        render(json: @advertisement)
+        render(json: Api::V1::AdvertisementsRepresenter.new(@advertisement))
       end
 
       def create
         if @advertisement.save
-          render(json: @advertisement, status: :created)
+          render(json: Api::V1::AdvertisementsRepresenter.new(@advertisement), status: :created)
         else
           render(json: @advertisement.errors, status: :unprocessable_entity)
         end
@@ -23,7 +23,7 @@ module Api
 
       def update
         if @advertisement.update(params_advertisement)
-          render(json: @advertisement, status: :ok)
+          render(json: Api::V1::AdvertisementsRepresenter.new(@advertisement), status: :ok)
         else
           render(json: @advertisement.errors, status: :not_foud)
         end

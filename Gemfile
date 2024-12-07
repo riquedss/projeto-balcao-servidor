@@ -30,7 +30,10 @@ gem "devise_token_auth"
 gem "omniauth", "~> 2.1"
 
 # Authorization
-gem 'cancancan'
+gem "cancancan"
+
+gem "representable"
+gem "multi_json"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"

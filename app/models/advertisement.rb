@@ -31,13 +31,7 @@ class Advertisement < ApplicationRecord
   end
 
   def images_urls
-    images.map { |image| rails_blob_url(image, only_path: false) }
-  end
-
-  def as_json(options = {})
-    super(options.merge({
-      methods: :images_urls
-    }))
+    images.map { |image| api_v1_url(image.id) }
   end
 
   def self.filter_categories(key)

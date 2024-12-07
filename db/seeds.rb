@@ -13,6 +13,7 @@ user = User.create!(
   full_name: Faker::Name.name,
   cpf: "772.859.910-71",
   email: Faker::Internet.email(domain: "id.uff.br"),
+  rating: 4.6,
   password: "password123",
   password_confirmation: "password123"
 )
