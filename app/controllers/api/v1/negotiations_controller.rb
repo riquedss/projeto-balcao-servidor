@@ -2,9 +2,8 @@ module Api
     module V1
         class NegotiationsController < ApplicationController
             before_action :set_advertisement
-            before_action :set_negotiation, only: %i[show update destroy]
+            before_action :set_negotiation, only: %i[update]
             before_action :initialize_negotiation, only: :create
-            authorize_resource except: %i[index show]
 
             def create
                 if @negotiation.save
@@ -22,22 +21,14 @@ module Api
                 end
             end
 
-            def destroy
-                @negotiation.destroy
-            end
-
             private
 
-            def params_negotiation
-                params.permit(:title, :description, :price, :campus, :category, :kind, :phone_contact, :email_contact, :user_id, images: [])
-            end
-
             def initialize_negotiation
-                @negotiation = @advertisement.negotiations.new(params_negotiation.merge(user: current_user))
+                @negotiation = @advertisement.negotiations.new(user: current_user)
               end
 
             def set_advertisement
-                @advertisement = Advertisement.find_by(params[:advertisement_id])
+                @advertisement = Advertisement.find(params[:advertisement_id])
             end
 
             def set_negotiation
