@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       resources :advertisements do
         resources :negotiations, except: :index
       end
+      get "/storage/blob/:id" => "storage_blob#download"
     end
   end
 end
