@@ -23,7 +23,7 @@ class PaginationAdvertisementService
     query_filter if query_has_filter?
     query_pagination(page, limit)
 
-    { "page": page + 1, "page_size": query.count, "itens": query }
+    { "page": page + 1, "page_size": query.count, "itens": Api::V1::AdvertisementsRepresenter.for_collection.new(query) }
   end
 
   def query_pagination(page, limit)
