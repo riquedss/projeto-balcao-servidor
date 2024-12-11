@@ -21,9 +21,11 @@ class PaginationAdvertisementService
     limit = (limit <= 0) ? LIMIT_DEFAULT : limit
 
     query_filter if query_has_filter?
+
+    page_count = page_count(query.count, limit)
     query_pagination(page, limit)
 
-    { "page": page + 1, "page_size": query.count, "itens": Api::V1::AdvertisementsRepresenter.for_collection.new(query) }
+    { "page_count": page_count, "page": page + 1, "page_size": query.count, "itens": Api::V1::AdvertisementsRepresenter.for_collection.new(query) }
   end
 
   def query_pagination(page, limit)
@@ -58,5 +60,13 @@ class PaginationAdvertisementService
     return true if query_parameters_hash["max_date"].blank?
 
     classe_name.date_valid?(query_parameters_hash["max_date"])
+  end
+
+  def page_count(total_itens, limit)
+    result = total_itens/limit
+
+    return result + 1 if total_itens % limit > 0
+
+    result
   end
 end
