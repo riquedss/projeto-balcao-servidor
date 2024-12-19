@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
     let(:anunciador) { create(:user) }
     let(:interested) { create(:user, :cpf_alternativo) }
     let(:advertisement) { create(:advertisement, user: anunciador) }
-    let(:negotiation) { create(:negotiation, user: anunciador, advertisement: advertisement) }
+    let(:negotiation) { create(:negotiation, user: interested, advertisement: advertisement) }
 
     context "When persisting a user in the database," do
       it "must be possible to associate the user with N Advertisements." do
