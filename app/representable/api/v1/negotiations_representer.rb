@@ -3,6 +3,7 @@ module Api
     class NegotiationsRepresenter < Representable::Decorator
       include Representable::JSON
 
+        property :id
         property :proposal
         property :status
         property :created_at
