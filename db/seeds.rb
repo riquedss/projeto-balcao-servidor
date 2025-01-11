@@ -7,11 +7,20 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-NUMERO_ADVERTISEMENT = 1000
+NUMERO_ADVERTISEMENT = 10
 
-user = User.create!(
+user_login = User.create!(
   full_name: Faker::Name.name,
   cpf: "772.859.910-71",
+  email: Faker::Internet.email(domain: "id.uff.br"),
+  rating: 4.6,
+  password: "password123",
+  password_confirmation: "password123"
+)
+
+user_advertisements = User.create!(
+  full_name: Faker::Name.name,
+  cpf: "046.964.490-76",
   email: Faker::Internet.email(domain: "id.uff.br"),
   rating: 4.6,
   password: "password123",
@@ -32,8 +41,8 @@ NUMERO_ADVERTISEMENT.times do
     campus: Random.rand(Advertisement.campus.count),
     phone_contact: "7198667-8909",
     email_contact: Faker::Internet.email(domain: "id.uff.br"),
-    user: user
+    user: user_advertisements
   )
 end
 
-puts "Usuário e #{NUMERO_ADVERTISEMENT} anúncios foram criados com sucesso!"
+puts "Usuários e #{NUMERO_ADVERTISEMENT} anúncios foram criados com sucesso!"
