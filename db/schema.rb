@@ -114,6 +114,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_09_220037) do
     t.string "email"
     t.string "cpf"
     t.integer "role", default: 0
+    t.float "rating"
     t.json "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

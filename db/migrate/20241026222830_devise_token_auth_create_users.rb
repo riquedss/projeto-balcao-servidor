@@ -40,6 +40,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[7.2]
       t.string :email
       t.string :cpf
       t.integer :role, default: 0
+      t.float :rating
 
       ## Tokens
       t.json :tokens
