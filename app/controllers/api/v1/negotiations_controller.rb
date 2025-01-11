@@ -6,7 +6,7 @@ module Api
       before_action :initialize_negotiation, only: :create
 
       def pending
-        render(json: Negotiation.where(advertisement: current_user.advertisements))
+        render(json: Api::V1::NegotiationsRepresenter.for_collection.new(Negotiation.where(advertisement: current_user.advertisements)))
       end
 
       def create
