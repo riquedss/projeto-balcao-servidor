@@ -25,9 +25,8 @@ module Api
       end
 
       private
-
       def initialize_negotiation
-        @negotiation = @advertisement.negotiations.new(user: current_user)
+        @negotiation = @advertisement.negotiations.new(user: current_user, proposal: params[:proposal])
       end
 
       def set_advertisement
