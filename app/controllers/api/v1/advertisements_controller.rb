@@ -6,7 +6,16 @@ module Api
       authorize_resource except: %i[index show]
 
       def index
-        render(json: PaginationAdvertisementService.process_query(Advertisement, request.query_parameters))
+        query_parameters = request.query_parameters
+        if query_parameters[:my] == "true"
+          my_advertisement = Advertisement.joins(:negotiations)
+                            .where("negotiations.status" => "completed", "negotiations.user_id" => current_user)
+          my_advertisement += current_user.advertisements
+
+          render(json: Api::V1::AdvertisementsRepresenter.for_collection.new(my_advertisement))
+        else
+          render(json: PaginationAdvertisementService.process_query(Advertisement, query_parameters))
+        end
       end
 
       def show
