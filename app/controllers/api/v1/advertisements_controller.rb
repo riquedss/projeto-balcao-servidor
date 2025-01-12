@@ -8,14 +8,19 @@ module Api
       def index
         query_parameters = request.query_parameters
         if query_parameters[:my] == "true"
-          my_advertisement = Advertisement.joins(:negotiations)
-                            .where("negotiations.status" => "completed", "negotiations.user_id" => current_user)
-          my_advertisement += current_user.advertisements
-
-          render(json: Api::V1::AdvertisementsRepresenter.for_collection.new(my_advertisement))
+          start_query = Advertisement
+                             .includes(:negotiations)
+                             .where(user: current_user)
+                             .or(Advertisement
+                                 .includes(:negotiations)
+                                 .where("negotiations.status" => "completed", "negotiations.user_id" => current_user)
+                                )
+          pag_advertisement = PaginationAdvertisementService.process_query(Advertisement, query_parameters, start_query)
         else
-          render(json: PaginationAdvertisementService.process_query(Advertisement, query_parameters))
+          pag_advertisement = PaginationAdvertisementService.process_query(Advertisement, query_parameters)
         end
+
+        render(json: pag_advertisement)
       end
 
       def show
