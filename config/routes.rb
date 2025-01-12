@@ -14,8 +14,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       mount_devise_token_auth_for "User", at: "auth"
       resources :advertisements do
-        resources :negotiations, except: [:index, :show, :destroy]
+        resources :negotiations, except: [ :index, :show, :destroy ]
       end
+      post "/chat/user/:user_id/advertisement/:advertisement_id/send_message" => "chat#send_message"
+      get "/chat/user/:user_id/advertisement/:advertisement_id/get_messages" => "chat#get_messages"
       get "/storage/blob/:id" => "storage_blob#download"
       get "negotiations/pending" => "negotiations#pending"
     end

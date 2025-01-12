@@ -3,13 +3,13 @@ class PaginationAdvertisementService
   LIMIT_DEFAULT = 8
   EXPECTED_FILTERS = %w[scope type category campus min_price max_price min_date max_date]
 
-  def self.process_query(classe_name, query_parameters_hash)
-    new(classe_name, query_parameters_hash).execute
+  def self.process_query(classe_name, query_parameters_hash, start_query = nil)
+    new(classe_name, query_parameters_hash, start_query).execute
   end
 
-  def initialize(classe_name, query_parameters_hash)
+  def initialize(classe_name, query_parameters_hash, start_query)
     self.classe_name = classe_name
-    self.query = classe_name
+    self.query = start_query ? start_query : classe_name
     self.query_parameters_hash = query_parameters_hash
   end
 
