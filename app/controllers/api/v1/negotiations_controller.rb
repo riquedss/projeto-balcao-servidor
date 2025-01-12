@@ -41,6 +41,7 @@ module Api
       def confirm_negotiation
         begin
           @negotiation.confirm!
+          ChatService.start_chat_with_proposal(@negotiation.user, @negotiation.advertisement)
           render json: @negotiation, status: :ok
         rescue ActiveRecord::RecordInvalid => e
           render json: { error: e.record.errors.full_messages }, status: :unprocessable_entity
