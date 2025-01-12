@@ -17,6 +17,7 @@ Rails.application.routes.draw do
         resources :negotiations, except: [:index, :show, :destroy]
       end
       get "/storage/blob/:id" => "storage_blob#download"
+      get "negotiations/pending" => "negotiations#pending"
     end
   end
 end

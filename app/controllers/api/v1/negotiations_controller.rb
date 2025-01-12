@@ -1,9 +1,13 @@
 module Api
   module V1
     class NegotiationsController < ApplicationController
-      before_action :set_advertisement
-      before_action :set_negotiation, only: %i[update]
+      before_action :set_advertisement, only: %i[ update create ]
+      before_action :set_negotiation, only: %i[ update ]
       before_action :initialize_negotiation, only: :create
+
+      def pending
+        render(json: Api::V1::NegotiationsRepresenter.for_collection.new(Negotiation.pending.where(advertisement: current_user.advertisements)))
+      end
 
       def create
         if @negotiation.save
@@ -25,9 +29,8 @@ module Api
       end
 
       private
-
       def initialize_negotiation
-        @negotiation = @advertisement.negotiations.new(user: current_user)
+        @negotiation = @advertisement.negotiations.new(user: current_user, proposal: params[:proposal])
       end
 
       def set_advertisement
