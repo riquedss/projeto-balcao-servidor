@@ -5,6 +5,13 @@ module Api
       before_action :set_negotiation, only: %i[update]
       before_action :initialize_negotiation, only: :create
 
+      def index
+        my_negotiations = Negotiation.where.not(status: :pending).where(user: current_user)
+        my_negotiations += Negotiation.joins(:advertisement).where.not(status:  "pending").where("advertisement.user_id" => current_user)
+
+        render(json: my_negotiations)
+      end
+
       def create
         if @negotiation.save
           render(json: @negotiation, status: :created)
@@ -14,10 +21,12 @@ module Api
       end
 
       def update
+        byebug
         case params[:status]
         when "confirmed"
           confirm_negotiation
         when "completed"
+          byebug
           complete_negotiation
         else
           render json: { error: "Invalid status." }, status: :unprocessable_entity
@@ -50,6 +59,7 @@ module Api
 
       def complete_negotiation
         begin
+          byebug
           @negotiation.complete!
           render json: @negotiation, status: :ok
         rescue ActiveRecord::RecordInvalid => e

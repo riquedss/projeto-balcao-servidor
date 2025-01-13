@@ -1,6 +1,8 @@
 class Negotiation < ApplicationRecord
   belongs_to :user
   belongs_to :advertisement
+  has_many :messages
+
   has_many :reviews, dependent: :destroy
 
   enum :status, %i[ pending confirmed completed cancelled ]
