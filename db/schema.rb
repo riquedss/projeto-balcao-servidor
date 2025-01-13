@@ -61,14 +61,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_09_220037) do
 
   create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "text"
-    t.boolean "edited"
+    t.boolean "edited", default: false
     t.integer "status"
+    t.uuid "user_sender", null: false
+    t.uuid "user_recipient", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "user_id", null: false
-    t.uuid "advertisement_id", null: false
-    t.index ["advertisement_id"], name: "index_messages_on_advertisement_id"
-    t.index ["user_id"], name: "index_messages_on_user_id"
+    t.uuid "negotiation_id", null: false
+    t.index ["negotiation_id"], name: "index_messages_on_negotiation_id"
   end
 
   create_table "negotiations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -127,8 +127,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_09_220037) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "advertisements", "users"
-  add_foreign_key "messages", "advertisements"
-  add_foreign_key "messages", "users"
+  add_foreign_key "messages", "negotiations"
   add_foreign_key "negotiations", "advertisements"
   add_foreign_key "negotiations", "users"
   add_foreign_key "reviews", "negotiations"

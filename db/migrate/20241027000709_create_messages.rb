@@ -4,6 +4,8 @@ class CreateMessages < ActiveRecord::Migration[7.2]
       t.text :text
       t.boolean :edited, default: false
       t.integer :status
+      t.uuid :user_sender, null: false
+      t.uuid :user_recipient, null: false
 
       t.timestamps
     end
