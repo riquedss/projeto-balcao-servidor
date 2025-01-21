@@ -1,6 +1,6 @@
 module Api
   module V1
-    class AdvertisementsController < ApplicationController
+    class AdvertisementsController < ApiController
       before_action :set_advertisement, only: %i[show update destroy]
       before_action :initialize_advertisement, only: :create
       authorize_resource except: %i[index show]

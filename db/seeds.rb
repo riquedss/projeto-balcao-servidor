@@ -45,4 +45,5 @@ NUMERO_ADVERTISEMENT.times do
   )
 end
 
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 puts "Usuários e #{NUMERO_ADVERTISEMENT} anúncios foram criados com sucesso!"

@@ -1,6 +1,6 @@
 module Api
   module V1
-    class NegotiationsController < ApplicationController
+    class NegotiationsController < ApiController
       before_action :set_advertisement, only: %i[ update create ]
       before_action :set_negotiation, only: %i[ update ]
       before_action :initialize_negotiation, only: :create
