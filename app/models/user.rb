@@ -20,4 +20,8 @@ class User < ApplicationRecord
   validates :email, format: { with: REGEX_EMAIL }, uniqueness: { case_sensitive: false }
   validates :cpf, format: { with: REGEX_CPF }, uniqueness: true
   enum role: %i[comum admin]
+
+  def self.authentication_keys
+    %i[email cpf]
+  end
 end
